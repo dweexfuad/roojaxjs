@@ -1,0 +1,25 @@
+{
+  "name": "roojaxjs",
+  "version": "1.0.0",
+  "description": "component roojax",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dweexfuad/roojaxjs.git"
+  },
+  "keywords": [
+    "roojax"
+  ],
+  "author": "nanang fuadi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dweexfuad/roojaxjs/issues"
+  },
+  "homepage": "https://github.com/dweexfuad/roojaxjs#readme",
+  "dependencies": {
+    "jquery": "^3.5.1"
+  }
+}
