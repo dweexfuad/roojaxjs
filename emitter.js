@@ -48,13 +48,14 @@ function getBasicResourceId()
 };
 window.basicResourceId = 1;
 
-$.EventEmitter = function(){
+$.roojaxui = $.roojaxui || {};
+$.roojaxui.EventEmitter = function(){
     this.className = "EventEmitter";    
     this.serialXML = "";
     this.init();
 };
-$.EventEmitter.extend(window.Function);
-$.EventEmitter.implement({
+$.roojaxui.EventEmitter.extend(window.Function);
+$.roojaxui.EventEmitter.implement({
 	init : function() 
 	{
 		this.callbackList = {};
