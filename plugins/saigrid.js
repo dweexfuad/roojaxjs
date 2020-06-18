@@ -17,11 +17,13 @@
         });
         this.eventEmitter = new $.roojaxui.EventEmitter();
         this.eventEmitter.on("change", (col, row, value) => {
-           console.log(this.cb);
+					if (this.cbOnChange)
+          	 this.cbOnChange.call(this,col, row, value);
         });
+				var $this = this;
         this.onChange = function(cb){
             console.log("set change " + cb);
-            this.cb = cb;
+            $this.cbOnChange = cb;
         }
         if ( methods[methodOrOptions] ) {
             return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
@@ -37,8 +39,7 @@
         init: function(options){
             if (options.onChange){
                 try{
-                    this.onChange.call(options);
-                    this.onChange.apply(this, options.onChange);
+                    this.onChange(options.onChange);
                 }catch(e){
                     console.log(e);
                 }
