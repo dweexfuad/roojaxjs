@@ -15,7 +15,14 @@
         this.$container.on("scroll", () =>{
             this.$containerHeader.css({left: - this.$container.scrollLeft()});
         });
-
+        this.eventEmitter = new $.roojaxui.EventEmitter();
+        this.eventEmitter.on("change", (col, row, value) => {
+           console.log(this.cb);
+        });
+        this.onChange = function(cb){
+            console.log("set change " + cb);
+            this.cb = cb;
+        }
         if ( methods[methodOrOptions] ) {
             return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
@@ -24,18 +31,27 @@
         } else {
             $.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.tooltip' );
         } 
+        
     };
     var methods = {
         init: function(options){
-            console.log("Init");
-            
+            if (options.onChange){
+                try{
+                    this.onChange.call(options);
+                    this.onChange.apply(this, options.onChange);
+                }catch(e){
+                    console.log(e);
+                }
+            }
             if (options.colTitle){
                 _createColumn(this, options.colTitle);
             }
             if (options.rowCount){
                 _createRow(this, options.rowCount);
             }
+            
         }
+        
     };
     
     function _createColumn($this, colTitle){
@@ -53,7 +69,7 @@
         $this.$containerHeader.css({width: l});
     }
     function _createRow($this, rowCount){
-        console.log($this.colTitle);
+        
         for(var i = 0; i < rowCount; i++){
             var l = 0;
             var rowNode = $("<div style='position:relative;height:30px;border-bottom:1px solid #888888;'></div>");
@@ -66,8 +82,12 @@
                 cell.html("Col " + c +": Row"+ i);
                 cell.appendTo($column);
                 $column.appendTo(rowNode);
-                cell.on("keyup",()=>{
-                    console.log(cell.html());
+                cell.on("keyup",{row: i,col :c, node : cell },(e)=>{
+                    try{
+                        $this.eventEmitter.emit("change",e.data.col, e.data.row, cell.html());
+                    }catch(e){
+                        console.log("Error "+ e);
+                    }
                 });
                 l += w;
             }); 
@@ -76,5 +96,12 @@
         }
 
     };
+    function _onChange($this, cb){
+        try{
+            
+        }catch(e){
+            console.log("err");
+        }
+    }
     
 }(jQuery));

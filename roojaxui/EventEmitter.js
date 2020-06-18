@@ -1,61 +1,11 @@
-window.Function.prototype.extend = function(parentClassOrObject){
-    try
-    {				
-        if (typeof(parentClassOrObject) == "function")
-        {
-        	if (parentClassOrObject.constructor == Function)
-            {
-                this.prototype = new parentClassOrObject;
-                this.prototype.constructor = this;
-                this.prototype.parent = parentClassOrObject.prototype;				
-    	    }
-    	    else
-    	    {
-                this.prototype = parentClassOrObject;
-                this.prototype.constructor = this;
-                this.prototype.parent = parentClassOrObject;
-    	    }			
-            return this;
-        }
-    }
-    catch (e)
-    {
-        if (this.className != undefined)
-            alert("Error when extending class : " + this.className + " : " + e);
-        else
-            alert("Error when extending class : " + this + " : " + e);
-    }
-};
-window.Function.prototype.implement = function(a1, a2, a3){
-	try{
-		if (a2 == undefined) a2 = true;
-		if (typeof a1 == 'string') return this.addMethod(a1, a2, a3);	
-		for (var p in a1) this.addMethod(p, a1[p], a2);						
-	}catch(e){
-		alert(e);
-	}		
-};
-
-window.Function.prototype.addMethod = function(name, method, force){				
-		if (force || !this.prototype[name]) eval( "this.prototype."+ name+" = "+method);			
-};
-function getBasicResourceId()
-{
-    var result = window.basicResourceId;
-    window.basicResourceId++;
-    
-    return result;
-};
-window.basicResourceId = 1;
-
-$.roojaxui = $.roojaxui || {};
 $.roojaxui.EventEmitter = function(){
     this.className = "EventEmitter";    
     this.serialXML = "";
-    this.init();
+	this.init();
+	
 };
 $.roojaxui.EventEmitter.extend(window.Function);
-$.roojaxui.EventEmitter.implement({
+$.roojaxui.EventEmitter.methods({
 	init : function() 
 	{
 		this.callbackList = {};
@@ -73,22 +23,11 @@ $.roojaxui.EventEmitter.implement({
 			
 			this.emit("newListener", event, listener);
 		}
+		
 	},
-	
 	on : function(event, listener)
 	{
 		this.addListener(event, listener);
-	},
-	
-	once : function(event, listener) 
-	{
-		if (typeof(listener) == "function")
-		{
-			if (this.onceCallbackList[event] == undefined)
-				this.onceCallbackList[event] = new Array();
-			
-			this.onceCallbackList[event].push(listener);
-		}
 	},
 	
 	removeListener : function(event, listener) 
@@ -164,7 +103,6 @@ $.roojaxui.EventEmitter.implement({
 				param.push(arguments[i]);
 			
 			var list = this.callbackList[event];
-			
 			if (list != undefined)
 			{
 				for (var i in list)
@@ -175,18 +113,6 @@ $.roojaxui.EventEmitter.implement({
 						list[i].apply(null, param);
 				}
 			}
-			
-			var list = this.onceCallbackList[event];
-			
-			if (list != undefined)
-			{
-				for (var i in list)
-				{
-					list[i].apply(null, param);
-				}
-			}
-			
-			this.onceCallbackList[event] = undefined;
 		}
 	}
 });

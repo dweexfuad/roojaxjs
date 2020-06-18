@@ -6,12 +6,12 @@
 //*	Contributors 
 //* 			SAI, PT											
 //***********************************************************************************************
-$.roojaxui.component = function(owner){
+$.roojaxui.Component = function(owner){
 	if (owner)
 	{
 		try
 		{				
-			$.roojaxui.component.prototype.parent.constructor.call(this);				
+			$.roojaxui.Component.prototype.parent.constructor.call(this);				
             this.init();
 			this.className = "control_component";				
 			this.owner = owner;				
@@ -28,15 +28,15 @@ $.roojaxui.component = function(owner){
 		}
 	}
 };
-$.roojaxui.component.extend($.roojaxui.EventEmitter);
+$.roojaxui.Component.extend($.roojaxui.EventEmitter);
 //---------------------------- Function ----------------------------------------
-$.roojaxui.component.prototype.toString = function(){
+$.roojaxui.Component.prototype.toString = function(){
 	return "[object " +this.className+"]";
 };
-$.roojaxui.component.implement({
+$.roojaxui.Component.methods({
     init : function()
 	{
-        $.roojaxui.component.prototype.parent.init.call(this);
+        $.roojaxui.Component.prototype.parent.init.call(this);
     },
 	free : function(){		
 		try{

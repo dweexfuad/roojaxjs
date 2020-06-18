@@ -1,23 +1,28 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="emitter.js"></script>
-<script src="saigrid.js" ></script>
+<script src="roojaxui/roojaxui.js"></script>
+<script src="plugins/saigrid.js" ></script>
 
 <script>
 
 $( document ).ready(function() {
     console.log( "ready!" );
-    $("#cont").saiGrid({
-        rowCount: 4,
-        colTitle: [{ title: "Kode", width:80}, {title:"Nama", width:180}, {title:"No Telp", width:100}]
+    
+    $.roojaxui.uses(["EventEmitter"],()=>{
+        console.log("Done");
+        $("#cont").saiGrid({
+            rowCount: 4,
+            colTitle: [{ title: "Kode", width:80}, {title:"Nama", width:180}, {title:"No Telp", width:100}]
+        });
+
+        $("#cont2").saiGrid({
+            rowCount: 5,
+            colTitle: [{ title: "Alamat", width:250}, {title:"Rumah", width:250}],
+            onChange: (col, row, value) => {
+                console.log("onChange SG2 " + col + ":"+row+":"+value);
+            }
+        });
     });
-    $("#cont2").saiGrid({
-        rowCount: 5,
-        colTitle: [{ title: "Alamat", width:250}, {title:"Rumah", width:250}]
-    });
-    $evt = new $.EventEmitter();
-    $evt.on("click", () => {
-        alert('this');
-    });
+   
 });
 
 </script>
