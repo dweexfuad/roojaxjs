@@ -3,17 +3,17 @@
     $.fn.saiGrid = function(methodOrOptions){
 
         var h = this.height() - 40;
-        this.$containerHeader = $("<div class='header' style='position:absolute;top:0;width:100%;height:40px;background:#336600'></div>");
-        this.$container = $("<div class='container' style='position:absolute;top:40px;width:100%;background:#9a9a9a;overflow:auto'></div>");
-        this.$container.css({height:h});
+        this.containerHeader = $("<div class='header' style='position:absolute;top:0;width:100%;height:40px;background:#336600'></div>");
+        this.container = $("<div class='container' style='position:absolute;top:40px;width:100%;background:#9a9a9a;overflow:auto'></div>");
+        this.container.css({height:h});
 
-        this.$containerNumber = $("<div class='fixed' style='position:absolute;top:0;background:#272727;width:40px;height:100%;top:0px'></div>");
+        this.containerNumber = $("<div class='fixed' style='position:absolute;top:0;background:#272727;width:40px;height:100%;top:0px'></div>");
         
-        this.$containerHeader.appendTo(this);
-        this.append(this.$container);
-        // this.append(this.$containerNumber);
-        this.$container.on("scroll", () =>{
-            this.$containerHeader.css({left: - this.$container.scrollLeft()});
+        this.containerHeader.appendTo(this);
+        this.append(this.container);
+        // this.append(this.containerNumber);
+        this.container.on("scroll", () =>{
+            this.containerHeader.css({left: - this.container.scrollLeft()});
         });
         this.eventEmitter = new $.roojaxui.EventEmitter();
         this.eventEmitter.on("change", (col, row, value) => {
@@ -64,10 +64,10 @@
             $column.css({left:l,alignItems: "center",justifyContent: "center",borderRight:"1px solid #888888"});
             
             $column.html(col.title);
-            $column.appendTo($this.$containerHeader);
+            $column.appendTo($this.containerHeader);
             l += w;
         }); 
-        $this.$containerHeader.css({width: l});
+        $this.containerHeader.css({width: l});
     }
     function _createRow($this, rowCount){
         
@@ -93,7 +93,7 @@
                 l += w;
             }); 
             rowNode.css({width: l});
-            rowNode.appendTo($this.$container);
+            rowNode.appendTo($this.container);
         }
 
     };
